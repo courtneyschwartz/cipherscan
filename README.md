@@ -3,9 +3,9 @@ CipherScan
 
 ![cipherscan](https://pbs.twimg.com/media/CPbjvCFW8AAnUK3.png:large)
 
-Cipherscan tests the ordering of the SSL/TLS ciphers on a given target, for all major versions of SSL and TLS. It also extracts some certificates informations, TLS options, OCSP stapling and more. Cipherscan is a wrapper above the `openssl s_client` command line.
+Cipherscan tests the ordering of the SSL/TLS ciphers on a given target for all major versions of SSL and TLS. It also extracts some certificate information, TLS options, OCSP stapling and more. Cipherscan is a wrapper over the `openssl s_client` command line.
 
-Cipherscan is meant to run on all flavors of unix. It ships with its own built of OpenSSL for Linux/64 and Darwin/64. On other platform, it will use the openssl version provided by the operating system (which may have limited ciphers support), or your own version provided in the `-o` command line flag.
+Cipherscan is meant to run on all flavors of Unix. It ships with its own built of OpenSSL for Linux/64 and Darwin/64. On other platforms, it will use the OpenSSL version provided by the operating system (which may have limited ciphers support), or your own version provided in the `-o` command line flag.
 
 Examples
 --------
@@ -143,7 +143,7 @@ Analyzing configurations
 The motivation behind cipherscan is to help operators configure good TLS on their
 endpoints. To help this further, the script `analyze.py` compares the results of
 a cipherscan with the TLS guidelines from https://wiki.mozilla.org/Security/Server_Side_TLS
-and output a level and recommendations.
+and then outputs a level and recommendations.
 
 ```bash
 $ ./analyze.py -t jve.linuxwall.info
@@ -174,30 +174,30 @@ matches the intermediate configuration level. If the administrator of this site
 wants to reach the modern level, the items that failed under the modern tests
 should be corrected.
 
-`analyze.py` does not make any assumption on what a good level should be. Sites
-operators should now what level they want to match against, based on the
+`analyze.py` does not make any assumption about what a good level should be. Sites'
+operators should know what level they want to match, based on the
 compatibility level they want to support. Again, refer to
 https://wiki.mozilla.org/Security/Server_Side_TLS for more information.
 
 Note on Nagios mode:
-`analyse.py` can be ran as a nagios check with `--nagios`. The exit code will
+You can run `analyse.py` as a Nagios check with `--nagios`. The exit code will
 then represent the state of the configuration:
-* 2 (critical) for bad tls
+* 2 (critical) for bad TLS
 * 1 (warning) if it doesn't match the desired level
 * 0 (ok) if it matches.
 cipherscan can take more than 10 seconds to complete. To alleviate any timeout
-issues, you may want to run it outside of nagios, passing data through some
+issues, you may want to run it outside of Nagios, passing data through some
 temporary file.
 
 OpenSSL
 -------
 
-Cipherscan uses a custom release of openssl for linux 64 bits and darwin 64
-bits. OpenSSL is build from a custom branch maintained by Peter Mosmans that
+Cipherscan uses a custom release of OpenSSL for 64-bit Linux and 64-bit Darwin. 
+OpenSSL is built from a custom branch maintained by Peter Mosmans that
 includes a number of patches not merged upstream. It can be found here:
 https://github.com/PeterMosmans/openssl
 
-You can build it yourself using following commands:
+You can build it yourself using the following commands:
 ```
 git clone https://github.com/PeterMosmans/openssl.git --depth 1 -b 1.0.2-chacha
 cd openssl
